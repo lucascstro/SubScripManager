@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SubscripManager.infra\SubscripManager.infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
