@@ -1,3 +1,5 @@
+using SubscripManager.application.Interfaces;
+using SubscripManager.application.Services;
 
 namespace SubscripManager.api;
 
@@ -12,6 +14,12 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+
+        builder.Services.AddScoped<IUserServices, UserServices>();
+        //builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+        builder.Services.AddScoped<ISignatureServices, SignatureServices>();
+        //builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
 
         var app = builder.Build();
 
