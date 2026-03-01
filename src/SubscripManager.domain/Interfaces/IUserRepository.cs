@@ -2,7 +2,7 @@
 
 namespace SubscripManager.domain.Interfaces
 {
-    public interface IUsersRepository
+    public interface IUserRepository
     {
         User Create(User user);
         User Update(Guid id, User user);
