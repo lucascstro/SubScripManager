@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "KqXo5KtLp3M=",
+  "success": true,
+  "projectFilePath": "F:\\Desenvolvimento\\csharp\\SubscripManager\\src\\SubscripManager.api\\SubscripManager.api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lukas\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.7\\microsoft.aspnetcore.openapi.9.0.7.nupkg.sha512",
+    "C:\\Users\\lukas\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
