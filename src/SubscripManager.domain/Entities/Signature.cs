@@ -6,8 +6,8 @@ namespace SubscripManager.domain.Entities
     {
         public Signature(string nameService, decimal value, int paymentDay, Status status, Categories categories, Guid userId)
         {
-            if (value != null || value <= 0) throw new Exception("Valor Inválido");
-            if (paymentDay >= 1 && paymentDay <= 28) throw new Exception("A data de vencimento deve estar entre 1 e 28 do mês.");
+            if (value == null || value <= 0) throw new Exception("Valor Inválido");
+            if (paymentDay <= 1 && paymentDay >= 28) throw new Exception("A data de vencimento deve estar entre 1 e 28 do mês.");
 
             Id = Guid.NewGuid();
             NameService = nameService;

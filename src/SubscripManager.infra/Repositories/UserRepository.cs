@@ -5,7 +5,7 @@ namespace SubscripManager.infra.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly List<User> _user = new();
+        private static readonly List<User> _user = new();
         public User Create(User user)
         {
             try

@@ -6,7 +6,7 @@ namespace SubscripManager.infra.Repositories
 {
     public class SignatureRepository : ISignatureRepository
     {
-        private readonly List<Signature> _signatures = new();
+        private static readonly List<Signature> _signatures = new();
         public Signature Create(Signature signature)
         {
             try
