@@ -32,7 +32,11 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _ctx.Users.FirstOrDefault(x => x.Id == id);
+                var usu = _ctx.Users.FirstOrDefault(x => x.Id == id);
+                if(usu != null)
+                    usu.Signatures = _ctx.Signatures.Where(x => x.UserId == id).ToList();
+
+                return usu;
             }
             catch { 
                 throw; 
