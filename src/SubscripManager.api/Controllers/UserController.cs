@@ -28,10 +28,10 @@ namespace SubscripManager.api.Controllers
         }
 
         // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public User Get(string userId)
+        [HttpGet("{userId}")]
+        public User Get(Guid userId)
         {
-            return _userServices.GetUserById(Guid.Parse(userId));
+            return _userServices.GetUserById(userId);
         }
 
         // POST api/<UserController>
@@ -43,10 +43,10 @@ namespace SubscripManager.api.Controllers
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("{userid}")]
-        public ActionResult Put(string userId, [FromBody] UserModel user)
+        [HttpPut("{userId}")]
+        public ActionResult Put(Guid userId, [FromBody] UserModel user)
         {
-            var ret = _userServices.Update(Guid.Parse(userId), new User(user.Name, user.Email));
+            var ret = _userServices.Update(userId, new User(user.Name, user.Email));
             return Ok(ret);
         }
 
