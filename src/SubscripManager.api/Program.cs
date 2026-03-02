@@ -1,5 +1,7 @@
 using SubscripManager.application.Interfaces;
 using SubscripManager.application.Services;
+using SubscripManager.domain.Interfaces;
+using SubscripManager.infra.Repositories;
 
 namespace SubscripManager.api;
 
@@ -16,10 +18,10 @@ public class Program
         builder.Services.AddOpenApi();
 
         builder.Services.AddScoped<IUserServices, UserServices>();
-        //builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
 
         builder.Services.AddScoped<ISignatureServices, SignatureServices>();
-        //builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
+        builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
 
         var app = builder.Build();
 
