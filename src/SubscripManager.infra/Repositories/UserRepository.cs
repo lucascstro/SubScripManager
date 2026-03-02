@@ -1,17 +1,27 @@
 ﻿using SubscripManager.domain.Entities;
 using SubscripManager.domain.Interfaces;
+using SubscripManager.infra.Context;
 
 namespace SubscripManager.infra.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private static readonly List<User> _user = new();
+        private readonly AppDbContext _ctx;
+
+        public UserRepository(AppDbContext ctx)
+        {
+            _ctx = ctx;
+        }
+
         public User Create(User user)
         {
             try
             {
-                if (!_user.Any(x => x.Id == user.Id))
-                    _user.Add(user);
+                if (!_ctx.Users.Any(x => x.Id == user.Id))
+                {
+                    _ctx.Add(user);
+                    _ctx.SaveChanges();
+                }
             }
             catch { throw; }
 
@@ -22,7 +32,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _user.FirstOrDefault(x => x.Id == id);
+                return _ctx.Users.FirstOrDefault(x => x.Id == id);
             }
             catch { 
                 throw; 
@@ -33,7 +43,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _user;
+                return _ctx.Users.ToList();
             }
             catch
             {
@@ -45,13 +55,14 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                var userItem = _user.FirstOrDefault(x => x.Id == id);
+                var userItem = _ctx.Users.FirstOrDefault(x => x.Id == id);
                 if (userItem == null) return null;
 
-                var idx = _user.IndexOf(userItem);
-                _user[idx] = user;
+                _ctx.Users.Remove(userItem);
+                _ctx.Add(user);
+                _ctx.SaveChanges();
 
-                return _user[idx];
+                return user;
             }
             catch
             {

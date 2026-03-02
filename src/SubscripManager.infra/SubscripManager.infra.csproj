@@ -10,4 +10,9 @@
     <ProjectReference Include="..\SubscripManager.domain\SubscripManager.domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0" />
+  </ItemGroup>
+
 </Project>

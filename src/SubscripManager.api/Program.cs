@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using SubscripManager.application.Interfaces;
 using SubscripManager.application.Services;
 using SubscripManager.domain.Interfaces;
+using SubscripManager.infra.Context;
 using SubscripManager.infra.Repositories;
 
 namespace SubscripManager.api;
@@ -27,6 +29,8 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=../SubscripManager.infra/subscrip.db"));
 
         var app = builder.Build();
 

@@ -1,18 +1,28 @@
 ﻿using SubscripManager.domain.Entities;
 using SubscripManager.domain.Entities.Enum;
 using SubscripManager.domain.Interfaces;
+using SubscripManager.infra.Context;
 
 namespace SubscripManager.infra.Repositories
 {
     public class SignatureRepository : ISignatureRepository
     {
-        private static readonly List<Signature> _signatures = new();
+        private readonly AppDbContext _ctx;
+
+        public SignatureRepository(AppDbContext ctx)
+        {
+            _ctx = ctx;
+        }
+
         public Signature Create(Signature signature)
         {
             try
             {
-                if(!_signatures.Any(x=>x.Id == signature.Id))
-                    _signatures.Add(signature);
+                if(!_ctx.Signatures.Any(x=>x.Id == signature.Id)) 
+                {
+                    _ctx.Signatures.Add(signature);
+                    _ctx.SaveChanges();
+                }   
             }
             catch (Exception ex) 
             {
@@ -26,7 +36,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _signatures.FirstOrDefault(x=>x.Id == id);
+                return _ctx.Signatures.FirstOrDefault(x=>x.Id == id);
             }
             catch 
             {
@@ -38,7 +48,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _signatures.Where(x => x.UserId == userId).ToList();
+                return _ctx.Signatures.Where(x => x.UserId == userId).ToList();
             }
             catch
             {
@@ -50,7 +60,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _signatures.Where(x => x.UserId == userId && x.Status == status).ToList();
+                return _ctx.Signatures.Where(x => x.UserId == userId && x.Status == status).ToList();
             }
             catch
             {
@@ -62,13 +72,14 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                var signatureItem = _signatures.FirstOrDefault(x => x.Id == id);
+                var signatureItem = _ctx.Signatures.FirstOrDefault(x => x.Id == id);
                 if (signatureItem == null) return null;
 
-                var idx = _signatures.IndexOf(signatureItem);
-                _signatures[idx] = signatures;
+                _ctx.Signatures.Remove(signatureItem);
+                _ctx.Signatures.Add(signatures);
+                _ctx.SaveChanges();
 
-                return _signatures[idx];
+                return signatures;
             }
             catch
             {

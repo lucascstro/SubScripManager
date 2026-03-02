@@ -9,6 +9,7 @@
             Id = Guid.NewGuid();
             Name = name;
             Email = email;
+            Signatures = new List<Signature>();
         }
 
         public Guid Id { get; set; }
