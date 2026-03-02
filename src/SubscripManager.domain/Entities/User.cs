@@ -16,6 +16,6 @@
         public string Name { get; set; }   
         public string Email { get; set; }
 
-        public List<Signature> Signatures { get; set; } = new ();
+        public List<Signature> Signatures { get; private set; } = new ();
     }
 }

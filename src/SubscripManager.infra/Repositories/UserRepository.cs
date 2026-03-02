@@ -1,6 +1,8 @@
-﻿using SubscripManager.domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SubscripManager.domain.Entities;
 using SubscripManager.domain.Interfaces;
 using SubscripManager.infra.Context;
+using System.Xml;
 
 namespace SubscripManager.infra.Repositories
 {
@@ -32,11 +34,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                var usu = _ctx.Users.FirstOrDefault(x => x.Id == id);
-                if(usu != null)
-                    usu.Signatures = _ctx.Signatures.Where(x => x.UserId == id).ToList();
-
-                return usu;
+                return _ctx.Users.Include(u => u.Signatures).FirstOrDefault(x => x.Id == id);
             }
             catch { 
                 throw; 
@@ -47,7 +45,7 @@ namespace SubscripManager.infra.Repositories
         {
             try
             {
-                return _ctx.Users.ToList();
+                return _ctx.Users.Include(u => u.Signatures).ToList();
             }
             catch
             {
