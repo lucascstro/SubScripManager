@@ -23,7 +23,25 @@ public class Program
         builder.Services.AddScoped<ISignatureServices, SignatureServices>();
         builder.Services.AddScoped<ISignatureRepository, SignatureRepository>();
 
+        builder.Services.AddControllers();
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         var app = builder.Build();
+
+        app.UseStaticFiles();
+
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            options.RoutePrefix = string.Empty;
+        });
+
+        app.UseSwagger(options =>
+        {
+            options.SerializeAsV2 = true;
+        });
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -34,7 +52,6 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
 
         app.MapControllers();
 
