@@ -6,7 +6,6 @@ namespace SubscripManager.domain.Interfaces
     {
         User Create(User user);
         User Update(Guid id, User user);
-        bool Remove(Guid id);
         List<User> GetUsers();
         User GetUserById(Guid id);
     }
