@@ -6,7 +6,7 @@ namespace SubscripManager.application.Interfaces
 {
     public interface ISignatureServices
     {
-        Signature Create(Signature user);
+        Signature Create(Signature signature);
         Signature Update(Guid id, Signature signatures);
         List<Signature> GetByUserId(Guid UserId);
         Signature GetById(Guid id);

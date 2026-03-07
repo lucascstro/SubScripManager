@@ -13,9 +13,9 @@ namespace SubscripManager.application.Services
         {
             _signatureRepository = signatureRepository;
         }
-        public Signature Create(Signature user)
+        public Signature Create(Signature signature)
         {
-            return _signatureRepository.Create(user);
+            return _signatureRepository.Create(signature);
         }
 
         public Signature GetById(Guid id)
