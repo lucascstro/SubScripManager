@@ -11,6 +11,6 @@ namespace SubscripManager.application.Interfaces
         List<Signature> GetByUserId(Guid UserId);
         Signature GetById(Guid id);
         List<Signature> GetByUserIdAndByStatus(Guid UserId, Status status);
-        MonthlyExpencesDTO GetMonthlyExpenxes(Guid userId);
+        MonthlyExpencesDTO GetMonthlyExpences(Guid userId);
     }
 }

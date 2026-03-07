@@ -6,7 +6,7 @@
         {
             if(string.IsNullOrEmpty(name)) throw new Exception("Nome inválido");
 
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid(); // ao realizar update, não alterar id
             Name = name;
             Email = email;
             Signatures = new List<Signature>();

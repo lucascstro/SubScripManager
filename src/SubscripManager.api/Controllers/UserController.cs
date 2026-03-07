@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SubscripManager.api.Models;
-using SubscripManager.application.DTO;
 using SubscripManager.application.Interfaces;
-using SubscripManager.application.Services;
 using SubscripManager.domain.Entities;
 
 namespace SubscripManager.api.Controllers
@@ -12,29 +10,24 @@ namespace SubscripManager.api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
-        private readonly ISignatureServices _signatureServices;
 
-        public UserController(IUserServices userServices, ISignatureServices signatureServices)
+        public UserController(IUserServices userServices)
         {
             _userServices = userServices;
-            _signatureServices = signatureServices;
         }
 
-        // GET: api/<UserController>
         [HttpGet]
         public IEnumerable<User> Get()
         {
           return _userServices.GetUsers();
         }
 
-        // GET api/<UserController>/5
         [HttpGet("{userId}")]
         public User Get(Guid userId)
         {
             return _userServices.GetUserById(userId);
         }
 
-        // POST api/<UserController>
         [HttpPost]
         public ActionResult Post([FromBody] UserModel user)
         {
@@ -42,20 +35,11 @@ namespace SubscripManager.api.Controllers
             return Ok(ret);
         }
 
-        // PUT api/<UserController>/5
         [HttpPut("{userId}")]
         public ActionResult Put(Guid userId, [FromBody] UserModel user)
         {
             var ret = _userServices.Update(userId, new User(user.Name, user.Email));
             return Ok(ret);
-        }
-
-        // Caso de uso principal: Gastos Mensais
-        [HttpGet("monthly-expences/{userId}")]
-        public ActionResult<MonthlyExpencesDTO> GetMonthly(Guid userId)
-        {
-            var result = _signatureServices.GetMonthlyExpenxes(userId);
-            return Ok(result);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SubscripManager.api.Models;
+using SubscripManager.application.DTO;
 using SubscripManager.application.Interfaces;
 using SubscripManager.domain.Entities;
 
@@ -16,20 +17,19 @@ namespace SubscripManager.api.Controllers
             _signatureServices = signatureServices;
         }
 
-        //[HttpGet("{id}")]
-        //public Signature GetById(Guid id)
-        //{
-        //    return _signatureServices.GetById(id);
-        //}
-
-        // GET api/<SignatureController>/5
         [HttpGet("{userId}")]
         public List<Signature> GetByUser(Guid userId)
         {
             return _signatureServices.GetByUserId(userId);
         }
+        
+        [HttpGet("monthly-expences/{userId}")]
+        public ActionResult<MonthlyExpencesDTO> GetMonthly(Guid userId)
+        {
+            var result = _signatureServices.GetMonthlyExpences(userId);
+            return Ok(result);
+        }
 
-        // POST api/<SignatureController>
         [HttpPost]
         public ActionResult Post([FromBody] SignatureModel model)
         {
@@ -42,7 +42,6 @@ namespace SubscripManager.api.Controllers
             return Ok(ret);
         }
 
-        // PUT api/<SignatureController>/5
         [HttpPut("{id}")]
         public ActionResult Put(Guid id, [FromBody] SignatureModel model)
         {

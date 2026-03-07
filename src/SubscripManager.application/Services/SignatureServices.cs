@@ -38,7 +38,7 @@ namespace SubscripManager.application.Services
            return _signatureRepository.Update(id, signatures);
         }
 
-        public MonthlyExpencesDTO GetMonthlyExpenxes(Guid userId){
+        public MonthlyExpencesDTO GetMonthlyExpences(Guid userId){
             var monthlyExpences = new MonthlyExpencesDTO();
 
             var allSignatures = _signatureRepository.GetByUserIdAndByStatus(userId, Status.Ativa);            
