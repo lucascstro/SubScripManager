@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using SubscripManager.api.Models;
 using SubscripManager.application.DTO;
+using SubscripManager.application.Features.Signatures.Dto;
+using SubscripManager.application.Features.Signatures.Request;
 using SubscripManager.application.Interfaces;
 using SubscripManager.domain.Entities;
 
@@ -10,47 +14,45 @@ namespace SubscripManager.api.Controllers
     [ApiController]
     public class SignatureController : ControllerBase
     {
-        private readonly ISignatureServices _signatureServices;
+        private readonly IMediator _mediator;
 
-        public SignatureController(ISignatureServices signatureServices)
+        public SignatureController(IMediator mediator)
         {
-            _signatureServices = signatureServices;
+            _mediator = mediator;
         }
 
         [HttpGet("{userId}")]
-        public List<Signature> GetByUser(Guid userId)
+        public async Task<List<SignatureDTO>> GetByUser(Guid userId)
         {
-            return _signatureServices.GetByUserId(userId);
-        }
-        
-        [HttpGet("monthly-expences/{userId}")]
-        public ActionResult<MonthlyExpencesDTO> GetMonthly(Guid userId)
-        {
-            var result = _signatureServices.GetMonthlyExpences(userId);
-            return Ok(result);
+            return await _mediator.Send(new GetSignaturesByUserRequest(userId));
         }
 
+        // [HttpGet("monthly-expences/{userId}")]
+        // public ActionResult<MonthlyExpencesDTO> GetMonthly(Guid userId)
+        // {
+        //     var result = _signatureServices.GetMonthlyExpences(userId);
+        //     return Ok(result);
+        // }
+
         [HttpPost]
-        public ActionResult Post([FromBody] SignatureModel model)
+        public async Task<ActionResult> Post([FromBody] SignatureModel model)
         {
-            var ret = _signatureServices.Create(new Signature(model.NameService,
-                                                              model.Value,
-                                                              model.PaymentDay,
-                                                              model.Status,
-                                                              model.Categories,
-                                                              model.UserId));
+            var signature = new Signature(model.NameService, model.Value, model.PaymentDay, model.Status, model.Categories, model.UserId);
+            var ret = await _mediator.Send(new CreateSignatureRequest(signature));
             return Ok(ret);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(Guid id, [FromBody] SignatureModel model)
+        public async Task<ActionResult> Put(Guid id, [FromBody] SignatureModel model)
         {
-            var ret = _signatureServices.Update(id, new Signature(model.NameService,
-                                                                  model.Value,
-                                                                  model.PaymentDay,
-                                                                  model.Status,
-                                                                  model.Categories,
-                                                                  model.UserId));
+            
+            var ret = await _mediator.Send(new UpdateSignatureRequest(id, new Signature(model.NameService,
+                                                                                model.Value,
+                                                                                model.PaymentDay,
+                                                                                model.Status,
+                                                                                model.Categories,
+                                                                                model.UserId)));
+                                                                                
             return Ok(ret);
         }
     }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SubscripManager.application;
 using SubscripManager.application.Interfaces;
 using SubscripManager.application.Services;
 using SubscripManager.domain.Interfaces;
@@ -31,6 +32,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=../SubscripManager.infra/subscrip.db"));
+
+        builder.Services.AddApplication();
 
         var app = builder.Build();
 
