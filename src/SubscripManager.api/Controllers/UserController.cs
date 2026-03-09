@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using SubscripManager.api.Models;
+using SubscripManager.application.Features.Users.Request;
 using SubscripManager.application.Interfaces;
 using SubscripManager.domain.Entities;
 
@@ -10,35 +12,40 @@ namespace SubscripManager.api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
+        private readonly IMediator _mediator;
 
-        public UserController(IUserServices userServices)
+
+        public UserController(IUserServices userServices, IMediator mediator)
         {
             _userServices = userServices;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public async Task<IActionResult> Get()
         {
-          return _userServices.GetUsers();
+            var ret = await _mediator.Send(new GetUsersRequest());
+            return Ok(ret);
         }
 
         [HttpGet("{userId}")]
-        public User Get(Guid userId)
+        public async Task<ActionResult> GetUserById(Guid userId)
         {
-            return _userServices.GetUserById(userId);
+            var ret = await _mediator.Send(new GetUserByIdRequest(userId));
+            return Ok(ret);
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] UserModel user)
+        public async Task<ActionResult> Post([FromBody] UserModel user)
         {
-            var ret = _userServices.Create(new User(user.Name, user.Email));
+            var ret = _mediator.Send(new CreateUserRequest(new User(user.Name, user.Email)));
             return Ok(ret);
         }
 
         [HttpPut("{userId}")]
-        public ActionResult Put(Guid userId, [FromBody] UserModel user)
+        public async Task<ActionResult> Put(Guid userId, [FromBody] UserModel user)
         {
-            var ret = _userServices.Update(userId, new User(user.Name, user.Email));
+            var ret = _mediator.Send(new UpdateUserRequest(userId, new User(user.Name, user.Email)));
             return Ok(ret);
         }
     }
