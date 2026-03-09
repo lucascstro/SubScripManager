@@ -1,9 +1,9 @@
-[x] Projeto com arquitetura em camadas
-[x] Criação de banco
-    [x] Base SQLite
-    [x] EntityFramework
-[x] Implementar MediarT
-    [ ] Remover acoplamento da minhas entidades do domain na application, passagem de parametro
-    [ ] Melhorar Sufixo dos meus dtos, criar xptoInput e xptoResponse.
-[ ] Imeplementar CQRS
-[ ] Implementar Mensageria com RabbitMQ
+- [x] Projeto com arquitetura em camadas
+- [x] Criação de banco
+  - [x] Base SQLite
+  - [x] EntityFramework
+- [x] Implementar MediarT
+  - [ ] Remover acoplamento das minhas entidades do domain na application, passagem de parametro
+  - [ ] Melhorar sufixo dos meus DTOs, criar xptoInput e xptoResponse.
+- [ ] Implementar CQRS
+- [ ] Implementar Mensageria com RabbitMQ
