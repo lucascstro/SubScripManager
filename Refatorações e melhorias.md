@@ -7,3 +7,7 @@
   - [ ] Melhorar sufixo dos meus DTOs, criar xptoInput e xptoResponse.
 - [ ] Implementar CQRS
 - [ ] Implementar Mensageria com RabbitMQ
+- [ ] Testes unitários
+- [ ] Testes Automatizados
+- [ ] Pipeline de buid
+- [ ] Docker Compose
